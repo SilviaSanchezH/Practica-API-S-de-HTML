@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    if (window.File && window.FileReader && window.FileList) {
+      console.log('Todas las APIs soportadas');
+    } else {
+      alert('La API de FILE no es soportada en este navegador.');
+    }
+  </script>
+</head>
+
+<body>
+  <input id="file" type="file" accept="video/*" onchange="cargarVideo(event)">
+  <video id="video" autoplay controls></video>
+  <div id="mensaje" style="display: none">El video está cargando</div>
+</body>
+<script>
+  function cargarVideo(e) {
+    document.getElementById("mensaje").style = "display:block";
+    const videoElegido = e.target.files[0];
+    if (!videoElegido.type.match("video/*")) {
+      alert("NO ES UN VIDEO :/");
+      return
+    }
+    const video = document.getElementById("video")
+    video.src = (window.URL || window.webkitURL).createObjectURL(videoElegido);
+    video.load()
+  }
+
+  document.getElementById("video").addEventListener("loadeddata", (e) => {
+    document.getElementById("mensaje").style = "display:none";
+  }) 
+</script>
+
+</html>
